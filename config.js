@@ -10,7 +10,11 @@ global.owner = [
   ['6283846434821', 'Wen-XD', true] // global owner 3
 ]
 
+global.wait = 'Sedang Di Proses, Mohon Tunggu....'
+global.eror = 'Terjadi Kesalahan Coba Lagi Nanti!'
 global.mods = [] // Want some help?
+global.sgc = 'https://chat.whatsapp.com/BJ4tTAzLTcR43stoLQGTPR'
+global.fotonya = 'https://telegra.ph/file/7667909e4ec19dc8d9e0a.jpg'
 global.povo = '0838-4643-4821'
 global.prems = [] // Premium user has unlimited limit
 global.APIs = {
