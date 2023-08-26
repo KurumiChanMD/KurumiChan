@@ -1,5 +1,5 @@
 {
-    "name": "ItsukaChan",
+    "name": "KurumiChan-MD",
     "version": "1.0.0",
     "description": "Simple WhatsApp Bot ESM",
     "main": "index.js",
@@ -26,16 +26,16 @@
         "MD",
         "baileys-md"
     ],
-    "homepage": "https://github.com/Chandra-XD/ItsukaChan",
+    "homepage": "https://github.com/KurumiChanMD/KurumiChan",
     "author": {
-        "name": "Chandra-XD"
+        "name": "Wen-XD"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Chandra-XD/ItsukaChan.git"
+        "url": "https://github.com/KurumiChanMD/KurumiChan.git"
     },
     "bugs": {
-        "url": "https://github.com/Chandra-XD/ItsukaChan/issues"
+        "url": "https://github.com/KurumiChanMD/KurumiChan/issues"
     },
     "license": "GPL-3.0-or-later",
     "dependencies": {
