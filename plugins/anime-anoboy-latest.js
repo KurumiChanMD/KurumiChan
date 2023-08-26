@@ -21,4 +21,5 @@ let handler = async (m, { conn, args, usedPrefix: _p }) => {
 handler.help = ['anoboylatest']
 handler.tags = ['tools']
 handler.command = /^(anoboylatest)$/i
+handler.limit = true
 export default handler
