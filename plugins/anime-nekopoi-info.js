@@ -30,4 +30,5 @@ cap += '' + '\n'
 handler.help = ['nekopoiinfo'].map(v => v + ' <id>')
 handler.tags = ['tools']
 handler.command = /^(nekoinfo|nekopoiinfo)$/i
+handler.premium = true
 export default handler
