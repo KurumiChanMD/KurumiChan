@@ -4,10 +4,10 @@ import { watchFile, unwatchFile } from 'fs'
 
 // Ini owner real no fek"
 global.owner = [
-  ['6285785705233'], // global owner 0
-  ['628990085223'], // global owner 1
-  ['6283848947227'], // global owner 2
-  ['6285785705233', 'Chandra XD', true] // global owner 3
+  ['6283846434821'], // global owner 0
+  ['6283846434821'], // global owner 1
+  ['6283846434821'], // global owner 2
+  ['6283846434821', 'Wen-XD', true] // global owner 3
 ]
 
 global.mods = [] // Want some help?
@@ -34,11 +34,11 @@ global.dtu = 'ᴅᴏɴᴀᴛᴇ'
 global.urlnya = "https://pnggilajacn.my.id/contacts"
 //========== callButtons ==========//
 global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
-global.phn = '+62 857-8570-5233'
+global.phn = '+62 838-4643-4821'
 
 // Sticker WM
-global.packname = `ItsukaBot-Md`
-global.author = `© 2021-2023`
+global.packname = `KurumiChan-MD`
+global.author = `© Wen-XD`
 
 // Random
 global.wm = `Powered by https://pnggilajacn.my.id`
