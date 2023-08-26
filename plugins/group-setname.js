@@ -1,17 +1,19 @@
-let handler  = async (m, { conn, args, text }) => {
-if (!text) throw `*[Info] Masukkan teks*`
-try {
-let text = args.join` `
-if(!args || !args[0]) {
-} else {
-conn.groupUpdateSubject(m.chat, text)}
-} catch (e) {
-throw '*[Info] Error*'
-}}
-handler.help = ['setname'].map(v => v + ' <text>')
-handler.tags = ['group']
-handler.command = /^(setname)$/i
-handler.group = true
-handler.admin = true
-handler.botAdmin = true
-export default handler
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+
+    await conn.groupUpdateSubject(m.chat, `${args.join(" ")}`);
+    m.reply('Sukses')
+  }
+  
+  handler.help = ['setnamagc']
+  handler.tags = ['group']
+  handler.command = /^setnamagc$/i
+  handler.owner = false
+  handler.mods = false
+  handler.premium = false
+  handler.group = true
+  handler.private = false
+  handler.register = false
+  handler.admin = true
+  handler.botAdmin = true
+  
+  export default handler

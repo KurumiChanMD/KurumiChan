@@ -14,8 +14,8 @@ let handler = async (m) => {
         if (stderr.trim()) m.reply(stderr)
     }
 }
-handler.help = ['statserver']
-handler.tags = ['info']
-handler.command = /^(statserver)$/i
+handler.help = ['server']
+handler.tags = ['main']
+handler.command = /^(server)$/i
 
 export default handler
