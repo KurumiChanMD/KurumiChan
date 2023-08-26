@@ -12,6 +12,8 @@ let handler = async (m) => {
 }
 handler.help = ['cleartmp']
 handler.tags = ['owner']
-handler.command = /^(cleartmp|ctm)$/i
-handler.owner = true
+handler.command = /^(cleartmp)$/i
+
+handler.rowner = true
+
 export default handler
