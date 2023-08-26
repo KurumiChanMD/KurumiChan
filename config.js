@@ -11,6 +11,7 @@ global.owner = [
 ]
 
 global.mods = [] // Want some help?
+global.povo = '0838-4643-4821'
 global.prems = [] // Premium user has unlimited limit
 global.APIs = {
   can: 'https://pnggilajacn.my.id',
