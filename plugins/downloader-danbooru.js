@@ -2,17 +2,19 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 
 let handler = async (m, { conn, args }) => {
-	if (!args[0]) throw 'Input URL'
-	if (!/danbooru\.donmai\.us\/posts\/[0-9]+$/i.test(args[0])) throw `Invalid *URL*`
-	await m.reply('Sedang diproses...')
+	if (!args[0]) throw 'Masukan Linknya!!'
+	if (!/danbooru\.donmai\.us\/posts\/[0-9]+$/i.test(args[0])) throw 'Invalid URL'
+	await m.reply(wait)
 	let data = await danbooruDl(args[0]), img = data.url
 	delete data.url
 	let capt = Object.keys(data).map((x) => `${x}: ${data[x]}`).join`\n`
 	await conn.sendFile(m.chat, img, '', capt, m)
 }
-handler.help = ['danbooru'].map(v => v + ' <url>')
 handler.tags = ['downloader']
 handler.command = /^danbooru$/i
+handler.help = ['danbooru']
+handler.limit = true
+
 export default handler
 
 export async function danbooruDl(url) {

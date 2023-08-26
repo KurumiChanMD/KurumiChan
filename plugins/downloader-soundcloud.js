@@ -1,25 +1,20 @@
-import axios from 'axios'
-import { apivisit } from './kanghit.js'
+import fetch from 'node-fetch'
 
-let handler = async (m, { conn, args }) => {
-    if (!args[0]) throw m.reply('Putting *URL* SoundCloud...')
-    try {
-    let res = (await axios.get(API('can', '/api/download/soundcloud', { url: args[0] } ))).data;
-	await m.reply('Sedang diproses...')
-	let caption = `Title : ${res.result.title}\nDurasi : ${res.result.duration}\nQuality : ${res.result.quality}`
-    let repl = await conn.sendMessage(m.chat, { audio: { url: res.result.download}, mimetype: 'audio/mpeg' }, { quoted: m })
-    await conn.sendMessage(m.chat, { text: caption }, { quoted: repl })
-    await apivisit
-	// By Chandra XD
-	// Follow bang
-	// TikTok : @pnggilajacn
-	// Github : https://github.com/Chandra-XD
-	} catch (e) {
-		console.log(e)
-		m.reply(`Invalid Soundcloud URL / Terjadi Kesalahan.`)
-	}
+let handler = async (m, { conn, usedPrefix, args, command, text }) => {
+if (!text) throw `Linknya?\nExample: *.soundcloud https://soundcloud.com/ndaa-212683099/dj-coba-kau-ingat-ingat-kembali-seharusnya-aku-jungle-dutch-terbaru-2021-full-bass-viral-tik?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing*`
+  m.reply(wait)
+  let res = await fetch(`https://api.xyroinee.xyz/api/downloader/soundcloud?url=${text}&apikey=${global.xyro}`)
+  let json = await res.json()
+  let { title, duration, quality, thumbnail, download } = json.data
+  await conn.sendFile(m.chat, thumbnail, 'oh.jpg', `Title: ${title}
+Duration: ${duration}
+Quality: ${quality}
+`, m)
+ await conn.sendFile(m.chat, download, '', m)
 }
-handler.help = ['soundcloud'].map(v => v + ' <url>')
+handler.help = ['soundcloud']
 handler.tags = ['downloader']
-handler.command = /^(soundcloud|scdl)$/i
+handler.command = /^(soundcloud)$/i
+handler.limit = true
+
 export default handler

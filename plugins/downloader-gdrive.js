@@ -1,23 +1,22 @@
 import fetch from 'node-fetch'
 import { sizeFormatter } from 'human-readable'
-import { apivisit } from './kanghit.js'
-
 let formatSize = sizeFormatter({
 	std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: false, render: (literal, symbol) => `${literal} ${symbol}B`
 })
 
 let handler = async (m, { conn, args }) => {
-	if (!args[0]) throw 'Input URL' 
+	if (!args[0]) throw 'Masukan Linknya!!!' 
+	m.reply(wait)
 	GDriveDl(args[0]).then(async (res) => {
 		if (!res) throw res
 		await m.reply(JSON.stringify(res, null, 2))
 		conn.sendMessage(m.chat, { document: { url: res.downloadUrl }, fileName: res.fileName, mimetype: res.mimetype }, { quoted: m })
 	})
-	await apivisit
 }
-handler.help = ['gdrive'].map(v => v + ' <url>')
+handler.help = ['gdrive']
+handler.tags = ['downloader']
 handler.command = /^(gdrive)$/i
-handler.disabled = false
+handler.limit = true
 
 export default handler
 

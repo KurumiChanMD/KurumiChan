@@ -1,26 +1,57 @@
-import yts from 'yt-search'
-import { youtubedl, youtubedlv2 } from '@bochilteam/scraper-sosmed'
-import { validateURL, getVideoID } from '../lib/ytUrlUtils.js'
+import { youtubedlv2, youtubedlv3 } from '@bochilteam/scraper'
 
-let handler = async (m, { conn, args }) => {
-	if (validateURL(args[0])) {
-		let id = await getVideoID(args[0]), vid = await yts({ videoId: id }), opt = args[1] && args[1].isNumber() ? args[1].replace(/\D/g, '') : ''
-		let { thumbnail, title, description: desc, timestamp, views, uploadDate, ago, author: { name }} = vid
-		await m.reply('Sedang diproses...')
-		let yt = await youtubedl(args[0]).catch(async () => await youtubedlv2(args[0]))
-		let dl_url = await yt.video['360p'].download()
-		let size = await yt.video['360p'].fileSizeH
-		let _thumb = {}
-		try { _thumb = { jpegThumbnail: (await conn.getFile(thumbnail)).data } }
-		catch (e) { }
-		if (size.split('MB')[0] >= 250) return m.reply(`File melebihi batas unduhan, download sendiri!!\n*Url :* ${dl_url}`)    
-		await conn.sendMessage(m.chat, { [/^(?:-|--)doc$/i.test(args[1]) ? 'document' : 'video']: { url: dl_url }, fileName: `${title}.mp4`, mimetype: 'video/mp4', ..._thumb }, { quoted: m }).then(async (msg) => {
-			let caption = `*Title:* ${title}\n*Channel:* ${name}\n*Duration:* ${timestamp}\n*Upload Date:* ${uploadDate}\n*Views:* ${views}\n*Description:*\n${desc}`
-			await conn.sendMessage(m.chat, { image: { url: thumbnail }, caption }, { quoted: msg })
-		})
-	} else throw 'Invalid URL'
+const handler = async (m, { conn, args, command }) => {
+  const v = args[0]
+
+  const resolutions = ["144p", "240p", "360p", "480p", "720p", "1080p"]
+  let qu = args[1] && resolutions.includes(args[1]) ? args[1] : "360p"
+  let q = qu.replace('p', '')
+
+  let thumb = {}
+  try {
+    const thumb2 = yt.thumbnails[0].url
+    thumb = { jpegThumbnail: thumb2 }
+  } catch (e) {}
+
+  let yt
+  try {
+    yt = await youtubedlv2(v)
+  } catch {
+    yt = await youtubedlv3(v)
+  }
+
+  const title = await yt.title
+
+  let size = ''
+  let dlUrl = ''
+  let selectedResolution = ''
+  let selectedQuality = ''
+  for (let i = resolutions.length - 1; i >= 0; i--) {
+    const res = resolutions[i]
+    if (yt.video[res]) {
+      selectedResolution = res
+      selectedQuality = res.replace('p', '')
+      size = await yt.video[res].fileSizeH
+      dlUrl = await yt.video[res].download()
+      break
+    }
+  }
+
+  if (dlUrl) {
+
+    await conn.sendMessage(m.chat, { video: { url: dlUrl, caption: title, ...thumb } }, { quoted: m })
+
+    await m.reply(`• Title: ${title}
+• Resolution: ${selectedResolution}
+• Size: ${size}
+• Video Telah Berhasil Diunduh!`)
+  } else {
+    await m.reply(`Maaf, Video Tidak Ada.`)
+  }
 }
-handler.help = ['mp4'].map(v => 'yt' + v + ` <url>`)
+
+handler.command = /^(ytmp4|youtubemp4|ytv)$/i
+handler.help = ["ytmp4"]
 handler.tags = ['downloader']
-handler.command = /^yt(v|mp4)?$/i
+
 export default handler

@@ -1,21 +1,35 @@
-import yts from 'yt-search'
-import ytdl from 'ytdl-core'
-import { apivisit } from './kanghit.js'
+import { 
+    youtubedl,
+    youtubedlv2 
+} from '@bochilteam/scraper'
 
-let handler = async (m, { conn, args }) => {
-	if (ytdl.validateURL(args[0])) {
-		let id = await ytdl.getVideoID(args[0]), vid = await yts({ videoId: id })
-		let { thumbnail, title, description: desc, timestamp, views, uploadDate, ago, author: { name }} = vid
-		await m.reply('Sedang diproses...')
-		let caption = `*Title:* ${title}\n*Channel:* ${name}\n*Duration:* ${timestamp}\n*Upload Date:* ${uploadDate}\n*Views:* ${views}\n*Description:*\n${desc}`
-		let repl = await conn.sendMessage(m.chat, { [/^(?:-|--)doc$/i.test(args[1]) ? 'document' : 'audio']: { url: `https://popcat.xyz/download?url=`+args[0]+`&filter=audio&filename=temp` }, fileName: `${title}.mp3`, mimetype: 'audio/mpeg' }, { quoted: m })
-		await conn.sendMessage(m.chat, { image: { url: thumbnail }, caption }, { quoted: repl })
-    await apivisit
-    }
-  else throw `Invalid URL`
+var handler = async (m, { conn, args }) => {
+  if (!args[0]) throw 'Urlnya Mana Banh? >:('
+  m.reply(wait)
+  let q = '128kbps'
+  let v = args[0]
+
+  // Ambil info dari video
+  const yt = await youtubedl(v).catch(async () => await  youtubedlv2(v))
+  const dl_url = await yt.audio[q].download()
+  const ttl = await yt.title
+  const size = await yt.audio[q].fileSizeH
+
+  // Tampilkan informasi file beserta thumbnail
+  const info = `
+• Judul: ${ttl}
+• Ukuran: ${size}
+• Link YouTube: ${v}`
+  await conn.sendMessage(m.chat, { 
+    document: { url: dl_url }, 
+    mimetype: 'audio/mpeg', 
+    fileName: `${ttl}.mp3`,
+    caption: info
+  }, {quoted: m})
 }
 
-handler.help = ['mp3'].map(v => 'yt' + v + ` <url>`)
+// Jika ingin menambahkan tag, ubah code berikut:
 handler.tags = ['downloader']
-handler.command = /^yt(a|mp3)$/i
+handler.help = ['ytmp3']
+handler.command = /^yta|ytmp3|youtubemp3$/i
 export default handler
