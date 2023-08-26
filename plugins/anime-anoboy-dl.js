@@ -25,4 +25,5 @@ let handler = async (m, { conn, text }) => {
 handler.help = ['anoboydl'].map(v => v + ' <id>')
 handler.tags = ['tools']
 handler.command = /^(anoboydl)$/i
+handler.limit = true
 export default handler
