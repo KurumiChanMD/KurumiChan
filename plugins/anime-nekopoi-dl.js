@@ -31,4 +31,5 @@ cap += '' + '\n'
 handler.help = ['nekopoidl'].map(v => v + ' <id>')
 handler.tags = ['tools']
 handler.command = /^(nekodl|nekopoidl)$/i
+handler.premium = true
 export default handler
